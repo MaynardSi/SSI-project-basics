@@ -24,7 +24,18 @@ namespace WindowsFormsApp1
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                string fileString = openFileDialog1.FileName;
                 MessageBox.Show(openFileDialog1.FileName);
+                try
+                {
+                    StreamReader sr = File.OpenText(fileString);
+                    //Console.WriteLine(sr.ReadToEnd());
+                    LogTextbox.Text = sr.ReadToEnd();
+                }
+                catch
+                {
+
+                }
             }
         }
 
@@ -54,6 +65,11 @@ namespace WindowsFormsApp1
         }
 
         private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LogTextbox_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -34,11 +34,11 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ReportLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.EntriesLabel = new System.Windows.Forms.Label();
             this.StartTimeLabel = new System.Windows.Forms.Label();
             this.EndTimeLabel = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.EntriesLabel = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.LogLabel = new System.Windows.Forms.Label();
             this.LogTextbox = new System.Windows.Forms.RichTextBox();
@@ -131,6 +131,39 @@
             this.tableLayoutPanel2.TabIndex = 4;
             this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
             // 
+            // textBox2
+            // 
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox2.Location = new System.Drawing.Point(97, 29);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(282, 20);
+            this.textBox2.TabIndex = 3;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(97, 3);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(282, 20);
+            this.textBox1.TabIndex = 2;
+            // 
+            // EntriesLabel
+            // 
+            this.EntriesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.EntriesLabel.AutoSize = true;
+            this.EntriesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EntriesLabel.Location = new System.Drawing.Point(41, 0);
+            this.EntriesLabel.Name = "EntriesLabel";
+            this.EntriesLabel.Size = new System.Drawing.Size(50, 26);
+            this.EntriesLabel.TabIndex = 4;
+            this.EntriesLabel.Text = "Entries:";
+            this.EntriesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // StartTimeLabel
             // 
             this.StartTimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -157,39 +190,6 @@
             this.EndTimeLabel.TabIndex = 1;
             this.EndTimeLabel.Text = "End Time:";
             this.EndTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(97, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(282, 20);
-            this.textBox1.TabIndex = 2;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(97, 29);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(282, 20);
-            this.textBox2.TabIndex = 3;
-            // 
-            // EntriesLabel
-            // 
-            this.EntriesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntriesLabel.AutoSize = true;
-            this.EntriesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EntriesLabel.Location = new System.Drawing.Point(41, 0);
-            this.EntriesLabel.Name = "EntriesLabel";
-            this.EntriesLabel.Size = new System.Drawing.Size(50, 26);
-            this.EntriesLabel.TabIndex = 4;
-            this.EntriesLabel.Text = "Entries:";
-            this.EntriesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // textBox3
             // 
@@ -224,6 +224,7 @@
             this.LogTextbox.Size = new System.Drawing.Size(382, 205);
             this.LogTextbox.TabIndex = 6;
             this.LogTextbox.Text = "";
+            this.LogTextbox.TextChanged += new System.EventHandler(this.LogTextbox_TextChanged);
             // 
             // Form1
             // 
