@@ -6,19 +6,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1
+namespace SSILogReport
 {
     static class ProgramFileHandler
     {
-        public static void ReadFile(string path)
+        /// <summary>
+        /// Returns a List containing the lines of a log file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns>List<string></returns>
+        public static List<string> ReadFile(string path)
         {
-            //File openedFile = File.OpenText(path);
-        }
+            var list = new List<string>();
+            try
+            {
+                using (StreamReader sr = File.OpenText(path))
+                {
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        list.Add(line);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("File reading error: ");
+                Console.WriteLine(e.Message);
+            }
 
-        static void main(string[] args)
-        {
-            DirectoryInfo root = new DirectoryInfo(".");
-            Console.WriteLine(root);
+            return list;
         }
 
     }

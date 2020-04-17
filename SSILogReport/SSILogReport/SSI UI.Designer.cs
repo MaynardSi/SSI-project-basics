@@ -1,6 +1,6 @@
-﻿namespace WindowsFormsApp1
+﻿namespace SSILogReport
 {
-    partial class Form1
+    partial class SSILogReportForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,56 +28,64 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.inputBox = new System.Windows.Forms.TextBox();
+            this.fileInputBox = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.BrowseButton = new System.Windows.Forms.Button();
+            this.browseButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ReportLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.EntriesLabel = new System.Windows.Forms.Label();
-            this.StartTimeLabel = new System.Windows.Forms.Label();
-            this.EndTimeLabel = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.LogLabel = new System.Windows.Forms.Label();
-            this.LogTextbox = new System.Windows.Forms.RichTextBox();
+            this.logDurationLabel = new System.Windows.Forms.Label();
+            this.startTimeTextBox = new System.Windows.Forms.TextBox();
+            this.entriesTextBox = new System.Windows.Forms.TextBox();
+            this.entriesLabel = new System.Windows.Forms.Label();
+            this.startTimeLabel = new System.Windows.Forms.Label();
+            this.endTimeLabel = new System.Windows.Forms.Label();
+            this.endTimeTextBox = new System.Windows.Forms.TextBox();
+            this.logDurationTextBox = new System.Windows.Forms.TextBox();
+            this.logLabel = new System.Windows.Forms.Label();
+            this.logTextbox = new System.Windows.Forms.RichTextBox();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.saveReportButton = new System.Windows.Forms.Button();
+            this.saveReportTextBox = new System.Windows.Forms.TextBox();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // inputBox
+            // fileInputBox
             // 
-            this.inputBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.fileInputBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.inputBox.Cursor = System.Windows.Forms.Cursors.No;
-            this.inputBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.inputBox.Location = new System.Drawing.Point(3, 3);
-            this.inputBox.Name = "inputBox";
-            this.inputBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.inputBox.Size = new System.Drawing.Size(271, 29);
-            this.inputBox.TabIndex = 1;
-            this.inputBox.TextChanged += new System.EventHandler(this.inputBox_TextChanged);
+            this.fileInputBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.fileInputBox.Cursor = System.Windows.Forms.Cursors.No;
+            this.fileInputBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileInputBox.Location = new System.Drawing.Point(5, 5);
+            this.fileInputBox.Margin = new System.Windows.Forms.Padding(5);
+            this.fileInputBox.Name = "fileInputBox";
+            this.fileInputBox.ReadOnly = true;
+            this.fileInputBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.fileInputBox.Size = new System.Drawing.Size(267, 24);
+            this.fileInputBox.TabIndex = 1;
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.DefaultExt = "txt";
             // 
-            // BrowseButton
+            // browseButton
             // 
-            this.BrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.BrowseButton.AutoSize = true;
-            this.BrowseButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.BrowseButton.Location = new System.Drawing.Point(280, 3);
-            this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(105, 29);
-            this.BrowseButton.TabIndex = 0;
-            this.BrowseButton.Text = "Browse";
-            this.BrowseButton.UseVisualStyleBackColor = true;
-            this.BrowseButton.Click += new System.EventHandler(this.button1_Click);
+            this.browseButton.AutoSize = true;
+            this.browseButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.browseButton.Location = new System.Drawing.Point(280, 3);
+            this.browseButton.Name = "browseButton";
+            this.browseButton.Size = new System.Drawing.Size(105, 28);
+            this.browseButton.TabIndex = 0;
+            this.browseButton.Text = "Browse";
+            this.browseButton.UseVisualStyleBackColor = true;
+            this.browseButton.Click += new System.EventHandler(this.BrowseButton_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -88,15 +96,15 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71.42857F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.57143F));
-            this.tableLayoutPanel1.Controls.Add(this.inputBox, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.BrowseButton, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.browseButton, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.fileInputBox, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(388, 35);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(388, 34);
             this.tableLayoutPanel1.TabIndex = 2;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // ReportLabel
             // 
@@ -113,12 +121,14 @@
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.60733F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.39267F));
-            this.tableLayoutPanel2.Controls.Add(this.textBox2, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.textBox1, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.EntriesLabel, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.StartTimeLabel, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.EndTimeLabel, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.textBox3, 1, 3);
+            this.tableLayoutPanel2.Controls.Add(this.logDurationLabel, 0, 4);
+            this.tableLayoutPanel2.Controls.Add(this.startTimeTextBox, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.entriesTextBox, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.entriesLabel, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.startTimeLabel, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.endTimeLabel, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.endTimeTextBox, 1, 3);
+            this.tableLayoutPanel2.Controls.Add(this.logDurationTextBox, 1, 4);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(15, 101);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 5;
@@ -127,121 +137,191 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(382, 138);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(382, 105);
             this.tableLayoutPanel2.TabIndex = 4;
-            this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
             // 
-            // textBox2
+            // logDurationLabel
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.logDurationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.logDurationLabel.AutoSize = true;
+            this.logDurationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logDurationLabel.Location = new System.Drawing.Point(3, 78);
+            this.logDurationLabel.Name = "logDurationLabel";
+            this.logDurationLabel.Size = new System.Drawing.Size(88, 27);
+            this.logDurationLabel.TabIndex = 6;
+            this.logDurationLabel.Text = "Log Duration: ";
+            this.logDurationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // startTimeTextBox
+            // 
+            this.startTimeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(97, 29);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(282, 20);
-            this.textBox2.TabIndex = 3;
+            this.startTimeTextBox.Location = new System.Drawing.Point(97, 29);
+            this.startTimeTextBox.Name = "startTimeTextBox";
+            this.startTimeTextBox.Size = new System.Drawing.Size(282, 20);
+            this.startTimeTextBox.TabIndex = 3;
             // 
-            // textBox1
+            // entriesTextBox
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.entriesTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(97, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(282, 20);
-            this.textBox1.TabIndex = 2;
+            this.entriesTextBox.Location = new System.Drawing.Point(97, 3);
+            this.entriesTextBox.Name = "entriesTextBox";
+            this.entriesTextBox.Size = new System.Drawing.Size(282, 20);
+            this.entriesTextBox.TabIndex = 2;
             // 
-            // EntriesLabel
+            // entriesLabel
             // 
-            this.EntriesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.entriesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntriesLabel.AutoSize = true;
-            this.EntriesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EntriesLabel.Location = new System.Drawing.Point(41, 0);
-            this.EntriesLabel.Name = "EntriesLabel";
-            this.EntriesLabel.Size = new System.Drawing.Size(50, 26);
-            this.EntriesLabel.TabIndex = 4;
-            this.EntriesLabel.Text = "Entries:";
-            this.EntriesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.entriesLabel.AutoSize = true;
+            this.entriesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.entriesLabel.Location = new System.Drawing.Point(41, 0);
+            this.entriesLabel.Name = "entriesLabel";
+            this.entriesLabel.Size = new System.Drawing.Size(50, 26);
+            this.entriesLabel.TabIndex = 4;
+            this.entriesLabel.Text = "Entries:";
+            this.entriesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // StartTimeLabel
+            // startTimeLabel
             // 
-            this.StartTimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.startTimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.StartTimeLabel.AutoSize = true;
-            this.StartTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StartTimeLabel.Location = new System.Drawing.Point(18, 26);
-            this.StartTimeLabel.Name = "StartTimeLabel";
-            this.StartTimeLabel.Size = new System.Drawing.Size(73, 26);
-            this.StartTimeLabel.TabIndex = 0;
-            this.StartTimeLabel.Text = "Start Time: ";
-            this.StartTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.StartTimeLabel.Click += new System.EventHandler(this.label1_Click);
+            this.startTimeLabel.AutoSize = true;
+            this.startTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startTimeLabel.Location = new System.Drawing.Point(18, 26);
+            this.startTimeLabel.Name = "startTimeLabel";
+            this.startTimeLabel.Size = new System.Drawing.Size(73, 26);
+            this.startTimeLabel.TabIndex = 0;
+            this.startTimeLabel.Text = "Start Time: ";
+            this.startTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // EndTimeLabel
+            // endTimeLabel
             // 
-            this.EndTimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.endTimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.EndTimeLabel.AutoSize = true;
-            this.EndTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EndTimeLabel.Location = new System.Drawing.Point(27, 52);
-            this.EndTimeLabel.Name = "EndTimeLabel";
-            this.EndTimeLabel.Size = new System.Drawing.Size(64, 26);
-            this.EndTimeLabel.TabIndex = 1;
-            this.EndTimeLabel.Text = "End Time:";
-            this.EndTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.endTimeLabel.AutoSize = true;
+            this.endTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.endTimeLabel.Location = new System.Drawing.Point(27, 52);
+            this.endTimeLabel.Name = "endTimeLabel";
+            this.endTimeLabel.Size = new System.Drawing.Size(64, 26);
+            this.endTimeLabel.TabIndex = 1;
+            this.endTimeLabel.Text = "End Time:";
+            this.endTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox3
+            // endTimeTextBox
             // 
-            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.endTimeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3.Location = new System.Drawing.Point(97, 55);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(282, 20);
-            this.textBox3.TabIndex = 5;
+            this.endTimeTextBox.Location = new System.Drawing.Point(97, 55);
+            this.endTimeTextBox.Name = "endTimeTextBox";
+            this.endTimeTextBox.Size = new System.Drawing.Size(282, 20);
+            this.endTimeTextBox.TabIndex = 5;
             // 
-            // LogLabel
+            // logDurationTextBox
             // 
-            this.LogLabel.AutoSize = true;
-            this.LogLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogLabel.Location = new System.Drawing.Point(16, 242);
-            this.LogLabel.Name = "LogLabel";
-            this.LogLabel.Size = new System.Drawing.Size(54, 25);
-            this.LogLabel.TabIndex = 5;
-            this.LogLabel.Text = "Log:";
-            this.LogLabel.Click += new System.EventHandler(this.label1_Click_1);
-            // 
-            // LogTextbox
-            // 
-            this.LogTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.logDurationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.LogTextbox.BackColor = System.Drawing.SystemColors.Window;
-            this.LogTextbox.Location = new System.Drawing.Point(15, 270);
-            this.LogTextbox.Name = "LogTextbox";
-            this.LogTextbox.ReadOnly = true;
-            this.LogTextbox.Size = new System.Drawing.Size(382, 205);
-            this.LogTextbox.TabIndex = 6;
-            this.LogTextbox.Text = "";
-            this.LogTextbox.TextChanged += new System.EventHandler(this.LogTextbox_TextChanged);
+            this.logDurationTextBox.Location = new System.Drawing.Point(97, 81);
+            this.logDurationTextBox.Name = "logDurationTextBox";
+            this.logDurationTextBox.Size = new System.Drawing.Size(282, 20);
+            this.logDurationTextBox.TabIndex = 7;
             // 
-            // Form1
+            // logLabel
+            // 
+            this.logLabel.AutoSize = true;
+            this.logLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logLabel.Location = new System.Drawing.Point(16, 242);
+            this.logLabel.Name = "logLabel";
+            this.logLabel.Size = new System.Drawing.Size(54, 25);
+            this.logLabel.TabIndex = 5;
+            this.logLabel.Text = "Log:";
+            // 
+            // logTextbox
+            // 
+            this.logTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.logTextbox.BackColor = System.Drawing.SystemColors.Window;
+            this.logTextbox.Location = new System.Drawing.Point(15, 270);
+            this.logTextbox.Name = "logTextbox";
+            this.logTextbox.ReadOnly = true;
+            this.logTextbox.Size = new System.Drawing.Size(382, 190);
+            this.logTextbox.TabIndex = 6;
+            this.logTextbox.Text = "";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71.42857F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.57143F));
+            this.tableLayoutPanel3.Controls.Add(this.saveReportButton, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.saveReportTextBox, 0, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(15, 466);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(388, 34);
+            this.tableLayoutPanel3.TabIndex = 8;
+            // 
+            // saveReportButton
+            // 
+            this.saveReportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveReportButton.AutoSize = true;
+            this.saveReportButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.saveReportButton.Location = new System.Drawing.Point(280, 3);
+            this.saveReportButton.Name = "saveReportButton";
+            this.saveReportButton.Size = new System.Drawing.Size(105, 28);
+            this.saveReportButton.TabIndex = 0;
+            this.saveReportButton.Text = "Save Report";
+            this.saveReportButton.UseVisualStyleBackColor = true;
+            this.saveReportButton.Click += new System.EventHandler(this.SaveReportButton_Click);
+            // 
+            // saveReportTextBox
+            // 
+            this.saveReportTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveReportTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.saveReportTextBox.Cursor = System.Windows.Forms.Cursors.No;
+            this.saveReportTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveReportTextBox.Location = new System.Drawing.Point(5, 5);
+            this.saveReportTextBox.Margin = new System.Windows.Forms.Padding(5);
+            this.saveReportTextBox.Name = "saveReportTextBox";
+            this.saveReportTextBox.ReadOnly = true;
+            this.saveReportTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.saveReportTextBox.Size = new System.Drawing.Size(267, 24);
+            this.saveReportTextBox.TabIndex = 1;
+            // 
+            // SSILogReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(412, 487);
-            this.Controls.Add(this.LogTextbox);
-            this.Controls.Add(this.LogLabel);
+            this.ClientSize = new System.Drawing.Size(412, 512);
+            this.Controls.Add(this.tableLayoutPanel3);
+            this.Controls.Add(this.logTextbox);
+            this.Controls.Add(this.logLabel);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.ReportLabel);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "Form1";
+            this.Name = "SSILogReportForm";
             this.Text = "SSI Log Report";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -249,20 +329,26 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox inputBox;
+        private System.Windows.Forms.TextBox fileInputBox;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Button BrowseButton;
+        private System.Windows.Forms.Button browseButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label ReportLabel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label StartTimeLabel;
-        private System.Windows.Forms.Label EndTimeLabel;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label EntriesLabel;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label LogLabel;
-        private System.Windows.Forms.RichTextBox LogTextbox;
+        private System.Windows.Forms.Label startTimeLabel;
+        private System.Windows.Forms.Label endTimeLabel;
+        private System.Windows.Forms.TextBox startTimeTextBox;
+        private System.Windows.Forms.TextBox entriesTextBox;
+        private System.Windows.Forms.Label entriesLabel;
+        private System.Windows.Forms.TextBox endTimeTextBox;
+        private System.Windows.Forms.Label logLabel;
+        private System.Windows.Forms.RichTextBox logTextbox;
+        private System.Windows.Forms.Label logDurationLabel;
+        private System.Windows.Forms.TextBox logDurationTextBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Button saveReportButton;
+        private System.Windows.Forms.TextBox saveReportTextBox;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

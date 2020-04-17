@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text;
 
-namespace WindowsFormsApp1
+namespace SSILogReport
 {
     static class Program
     {
@@ -19,7 +19,7 @@ namespace WindowsFormsApp1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new SSILogReportForm());
         }
     }
 }

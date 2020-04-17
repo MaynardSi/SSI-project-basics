@@ -9,16 +9,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1
+namespace SSILogReport
 {
-    public partial class Form1 : Form
+    public partial class SSILogReportForm : Form
     {
-        public Form1()
+        public SSILogReportForm()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private LogClass Log { get; set; }
+        internal ReportGenerator Report { get; private set; }
+
+        private void BrowseButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
@@ -28,9 +31,30 @@ namespace WindowsFormsApp1
                 MessageBox.Show(openFileDialog1.FileName);
                 try
                 {
-                    StreamReader sr = File.OpenText(fileString);
+                    Log = new LogClass(fileString, ProgramFileHandler.ReadFile(fileString));
+                    fileInputBox.Text = fileString;
+                    Report = new ReportGenerator(Log.LogList);
+
+                    var entries = Report.Entries;
+                    var startTime = Report.StartTime;
+                    var endTime = Report.EndTime;
+                    var logDuration = Report.LogDuration;
+                    string[] splitpath = fileString.Split('.');
+                    string reportPath = String.Join("_report.", splitpath);
+
+                    entriesTextBox.Text = entries;
+                    startTimeTextBox.Text = startTime.ToString("MMMM dd, yyyy HH:mm:ss.fff");
+                    endTimeTextBox.Text = endTime.ToString("MMMM dd, yyyy HH:mm:ss.fff");
+                    logDurationTextBox.Text = logDuration.ToString("%d") + " days " +
+                        logDuration.ToString("%h") + " hours " +
+                        logDuration.ToString("%m") + " minutes " +
+                        logDuration.ToString("%s") + " seconds " +
+                        logDuration.ToString("%f") + " milliseconds";
+                    saveReportTextBox.Text = reportPath;
+                    //List<string> logList = ProgramFileHandler.ReadFile(fileString);
+                    //MessageBox.Show(logList.Count().ToString());
                     //Console.WriteLine(sr.ReadToEnd());
-                    LogTextbox.Text = sr.ReadToEnd();
+                    //logList.ForEach(item => LogTextbox.AppendText(item.Count() + "_" + item));
                 }
                 catch
                 {
@@ -39,39 +63,26 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void SaveReportButton_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void inputBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void LogTextbox_TextChanged(object sender, EventArgs e)
-        {
-
+            string path = saveReportTextBox.Text;
+            string dir = path.Substring(0, path.LastIndexOf("\\") + 1);
+            if (path != "")
+            {
+                if (Directory.Exists(dir))
+                {
+                    Report.WriteReportFile(path);
+                    MessageBox.Show("Successfully saved at \n" + path);
+                }
+                else
+                {
+                    MessageBox.Show(path + " is not a valid file or directory.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a file!");
+            }
         }
     }
 }

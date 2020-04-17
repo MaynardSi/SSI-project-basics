@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReportGenerator.cs" />
+    <Compile Include="LogClass.cs" />
     <Compile Include="ProgramFileHandler.cs" />
     <Compile Include="SSI UI.cs">
       <SubType>Form</SubType>
