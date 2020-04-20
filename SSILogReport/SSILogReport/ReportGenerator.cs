@@ -13,14 +13,15 @@ namespace SSILogReport
     /// This class is responsible for parsing the log file
     /// to generate needed reports.
     /// </summary>
+    ///
     class ReportGenerator
     {
-        public ReportGenerator(List<string> logList)
+        public ReportGenerator(List<LogClass.LogEntryClass> logList)
         {
             LogList = logList;
         }
 
-        public List<string> LogList { get; private set; }
+        public List<LogClass.LogEntryClass> LogList { get; private set; }
 
         public string Entries
         {
@@ -34,8 +35,8 @@ namespace SSILogReport
         {
             get
             {
-                string[] firstEntry = LogList.First().Split(',');
-                DateTime startTime = Convert.ToDateTime(firstEntry[2]);
+                LogClass.LogEntryClass firstEntry = LogList.First();
+                DateTime startTime = firstEntry.TimeInitiated;
                 return startTime;
             }
         }
@@ -44,8 +45,8 @@ namespace SSILogReport
         {
             get
             {
-                string[] lastEntry = LogList.Last().Split(',');
-                DateTime endTime = Convert.ToDateTime(lastEntry[2]);
+                LogClass.LogEntryClass lastEntry = LogList.Last();
+                DateTime endTime = lastEntry.TimeInitiated;
                 return endTime;
             }
         }
@@ -59,6 +60,59 @@ namespace SSILogReport
             }
         }
 
+        public int GetTagCategoryCount(bool isTag, string tagCatName)
+        {
+            int result = new int();
+            if (isTag)
+            {
+                result = LogList.Where(s => s.Tag == tagCatName).Count();
+            }
+            else
+            {
+                result = LogList.Where(s => s.Category == tagCatName).Count();
+            }
+            return result;
+        }
+
+        public List<Tuple<string, int>> GetTagCatergory(bool isTag)
+        {
+            //TODO: get all distinct tag names
+            List<string> result = new List<string>();
+            if (isTag)
+            {
+                result = LogList.Select(o => o.Tag).Distinct().ToList();
+            }
+            else
+            {
+                result = LogList.Select(o => o.Category).Distinct().ToList();
+            }
+            var tagCatTupleList = new List<Tuple<string, int>>();
+            foreach (var tagCat in result)
+            {
+                var tagTuple = new Tuple<string, int>(tagCat, GetTagCategoryCount(isTag, tagCat));
+                tagCatTupleList.Add(tagTuple);
+            }
+            //TODO: for each tag, get count
+            return tagCatTupleList;
+        }
+
+        public List<Tuple<string, int>> GetTag
+        {
+            get
+            {
+                return GetTagCatergory(true);
+            }
+        }
+
+        public List<Tuple<string, int>> GetCategory
+        {
+            get
+            {
+                return GetTagCatergory(false);
+            }
+        }
+
+        //TODO: Method documentation
         public void WriteReportFile(string writePath)
         {
             string[] report =
@@ -68,34 +122,7 @@ namespace SSILogReport
                 "End Time: " + this.EndTime.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture),
                 "Log Duration: " + this.LogDuration
             };
-
-            try
-            {
-                File.WriteAllLines(writePath, report);
-            }
-            catch
-            {
-
-            }
+            ProgramFileHandler.WriteFile(writePath, report);
         }
-
-        //public DateTime GetStartTime()
-        //{
-        //    string[] firstEntry = LogList.First().Split(',');
-        //    DateTime startTime = Convert.ToDateTime(firstEntry[2]);
-        //    return startTime;
-        //}
-
-        //public DateTime GetEndTime()
-        //{
-        //    string[] lastEntry = LogList.Last().Split(',');
-        //    DateTime endTime = Convert.ToDateTime(lastEntry[2]);
-        //    return endTime;
-        //}
-
-        //public DateTime GetLogDuration()
-        //{
-        //    return DateTime.Now;
-        //}
     }
 }

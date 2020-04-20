@@ -39,6 +39,8 @@ namespace SSILogReport
                     var startTime = Report.StartTime;
                     var endTime = Report.EndTime;
                     var logDuration = Report.LogDuration;
+                    var tagDisplay = Report.GetTag;
+                    var categoryDisplay = Report.GetCategory;
                     string[] splitpath = fileString.Split('.');
                     string reportPath = String.Join("_report.", splitpath);
 
@@ -50,7 +52,13 @@ namespace SSILogReport
                         logDuration.ToString("%m") + " minutes " +
                         logDuration.ToString("%s") + " seconds " +
                         logDuration.ToString("%f") + " milliseconds";
+                    tagTexbox.Text = string.Join("\r\n", Report.GetTag);
+                    categoryTextbox.Text = string.Join("\r\n", Report.GetCategory);
+                    //TODO: Replace line below
+                    logTextbox.Text = string.Join("\r\n", ProgramFileHandler.ReadFile(fileString));
                     saveReportTextBox.Text = reportPath;
+
+                    saveReportButton.Enabled = true;
                     //List<string> logList = ProgramFileHandler.ReadFile(fileString);
                     //MessageBox.Show(logList.Count().ToString());
                     //Console.WriteLine(sr.ReadToEnd());
@@ -65,23 +73,14 @@ namespace SSILogReport
 
         private void SaveReportButton_Click(object sender, EventArgs e)
         {
-            string path = saveReportTextBox.Text;
-            string dir = path.Substring(0, path.LastIndexOf("\\") + 1);
-            if (path != "")
+            string path = saveReportTextBox.Text;                       //Default text for file
+            SaveFileDialog SaveFileDialog1 = new SaveFileDialog();      //Save File dialog prompt
+            saveFileDialog1.InitialDirectory = path;
+            saveFileDialog1.FileName = path.Substring(path.LastIndexOf("\\") + 1);      //Get path from text box then trim file name
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if (Directory.Exists(dir))
-                {
-                    Report.WriteReportFile(path);
-                    MessageBox.Show("Successfully saved at \n" + path);
-                }
-                else
-                {
-                    MessageBox.Show(path + " is not a valid file or directory.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select a file!");
+                path = saveFileDialog1.FileName;
+                Report.WriteReportFile(path);
             }
         }
     }

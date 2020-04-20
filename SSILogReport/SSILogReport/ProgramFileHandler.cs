@@ -38,5 +38,10 @@ namespace SSILogReport
             return list;
         }
 
+        public static void WriteFile(string writePath, string[] writeLines)
+        {
+            string dir = writePath.Substring(0, writePath.LastIndexOf("\\") + 1);
+            File.WriteAllLines(writePath, writeLines);
+        }
     }
 }
