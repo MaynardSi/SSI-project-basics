@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SSILogReport
 {
@@ -110,6 +107,22 @@ namespace SSILogReport
             {
                 return GetTagCatergory(false);
             }
+        }
+
+        public List<string> FilterLogDisplay(List<string> tags, List<string> categories)
+        {
+            List<string> filteredLogDisplay = new List<string>();
+            if (tags.Contains("ALL"))
+            {
+                tags = GetTag.Select(t => t.Item1).ToList();
+            }
+            if (categories.Contains("ALL"))
+            {
+                categories = GetCategory.Select(c => c.Item1).ToList();
+            }
+            //List <string> filter =
+            //filteredLogDisplay = LogList.Where(l => tags.All(t => l.LogEntryString.Contains(t)));
+            return filteredLogDisplay;
         }
 
         //TODO: Method documentation

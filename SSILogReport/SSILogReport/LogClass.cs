@@ -1,15 +1,13 @@
-﻿using SSILogReport;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 
 /// <summary>
 /// Log class which contains Log variables
 /// </summary>
 public class LogClass
 {
-	public LogClass(string logName, List<string> log)
-	{
+    public LogClass(string logName, List<string> log)
+    {
         this.LogName = logName;
         this.LogList = LogListInit(log);
     }
@@ -23,7 +21,7 @@ public class LogClass
         foreach (var line in log)
         {
             addLine = line.Split(charSeparators, 4);
-            LogEntryClass newLogEntry = new LogEntryClass(countId, addLine[0], addLine[1], Convert.ToDateTime(addLine[2]), addLine[3]);
+            LogEntryClass newLogEntry = new LogEntryClass(line, countId, addLine[0], addLine[1], Convert.ToDateTime(addLine[2]), addLine[3]);
             logList.Add(newLogEntry);
             countId++;
         }
@@ -44,7 +42,7 @@ public class LogClass
     /// </summary>
     public class LogEntryClass
     {
-        public LogEntryClass(int entryNo, string tag, string category, DateTime timeInitiated, string actionTaken)
+        public LogEntryClass(string line, int entryNo, string tag, string category, DateTime timeInitiated, string actionTaken)
         {
             this.EntryNo = entryNo;
             this.Tag = tag;
@@ -58,5 +56,6 @@ public class LogClass
         public string Category { get; set; }
         public DateTime TimeInitiated { get; set; }
         public string ActionTaken { get; set; }
+
     }
 }

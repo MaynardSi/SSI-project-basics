@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSILogReport
@@ -31,9 +25,8 @@ namespace SSILogReport
                 MessageBox.Show(openFileDialog1.FileName);
                 try
                 {
-                    Log = new LogClass(fileString, ProgramFileHandler.ReadFile(fileString));
                     fileInputBox.Text = fileString;
-                    Report = new ReportGenerator(Log.LogList);
+                    Report = new ReportGenerator(new LogClass(fileString, ProgramFileHandler.ReadFile(fileString)).LogList);
 
                     var entries = Report.Entries;
                     var startTime = Report.StartTime;
@@ -52,10 +45,23 @@ namespace SSILogReport
                         logDuration.ToString("%m") + " minutes " +
                         logDuration.ToString("%s") + " seconds " +
                         logDuration.ToString("%f") + " milliseconds";
-                    tagTexbox.Text = string.Join("\r\n", Report.GetTag);
-                    categoryTextbox.Text = string.Join("\r\n", Report.GetCategory);
-                    //TODO: Replace line below
-                    logTextbox.Text = string.Join("\r\n", ProgramFileHandler.ReadFile(fileString));
+
+                    //TODO: Change to clickable tag text
+                    tagDisplay.Insert(0, new Tuple<string, int>("ALL", Convert.ToInt32(entries)));
+                    tagListBox.DataSource = tagDisplay;
+                    tagListBox.DisplayMember = "Item1" + "Item2";
+                    tagListBox.SelectedValueChanged += new EventHandler(ListBox_SelectedValueChanged);
+
+                    //TODO: Change to clickable category text
+                    categoryDisplay.Insert(0, new Tuple<string, int>("ALL", Convert.ToInt32(entries)));
+                    categoryListBox.DataSource = categoryDisplay;
+                    categoryListBox.DisplayMember = "Item1" + "Item2";
+                    categoryListBox.SelectedValueChanged += new EventHandler(ListBox_SelectedValueChanged);
+
+                    var logBindingList = new BindingList<LogClass.LogEntryClass>(Report.LogList);
+                    var source = new BindingSource(logBindingList, null);
+                    LogDataGridView.DataSource = logBindingList;
+
                     saveReportTextBox.Text = reportPath;
 
                     saveReportButton.Enabled = true;
@@ -69,6 +75,38 @@ namespace SSILogReport
 
                 }
             }
+        }
+
+        private void ListBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            ListBox listbox = (ListBox)sender;
+
+            if (listbox.SelectedItems.Count > 1)
+            {
+                if (listbox.SelectedIndex == 0)
+                {
+                    listbox.SelectedItems.Clear();
+                    listbox.SetSelected(0, true);
+                }
+            }
+
+        }
+
+        private void filterLogButton_Click(object sender, EventArgs e)
+        {
+            List<string> selectedTags = new List<string>();
+            List<string> selectedCategories = new List<string>();
+
+            foreach (string item in tagListBox.SelectedItems)
+            {
+                selectedTags.Add(item);
+            }
+
+            foreach (string item in categoryListBox.SelectedItems)
+            {
+                selectedCategories.Add(item);
+            }
+            //Report.FilterLogDisplay
         }
 
         private void SaveReportButton_Click(object sender, EventArgs e)
