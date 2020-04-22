@@ -20,6 +20,9 @@ namespace SSILogReport
 
         public List<LogClass.LogEntryClass> LogList { get; private set; }
 
+        /// <summary>
+        /// Get number of log entries
+        /// </summary>
         public string Entries
         {
             get
@@ -28,6 +31,9 @@ namespace SSILogReport
             }
         }
 
+        /// <summary>
+        /// Get time when log was initiated
+        /// </summary>
         public DateTime StartTime
         {
             get
@@ -38,6 +44,9 @@ namespace SSILogReport
             }
         }
 
+        /// <summary>
+        /// Get time when log ended
+        /// </summary>
         public DateTime EndTime
         {
             get
@@ -48,6 +57,9 @@ namespace SSILogReport
             }
         }
 
+        /// <summary>
+        /// Get duration of log from start time to end time
+        /// </summary>
         public TimeSpan LogDuration
         {
             get
@@ -57,6 +69,12 @@ namespace SSILogReport
             }
         }
 
+        /// <summary>
+        /// Returns Count of particular category or tag
+        /// </summary>
+        /// <param name="isTag"></param>
+        /// <param name="tagCatName"></param>
+        /// <returns></returns>
         public int GetTagCategoryCount(bool isTag, string tagCatName)
         {
             int result = new int();
@@ -71,6 +89,11 @@ namespace SSILogReport
             return result;
         }
 
+        /// <summary>
+        /// Return pair of particular Tag/Category along with their respective count
+        /// </summary>
+        /// <param name="isTag"></param>
+        /// <returns></returns>
         public List<Tuple<string, int>> GetTagCatergory(bool isTag)
         {
             //TODO: get all distinct tag names
@@ -93,6 +116,9 @@ namespace SSILogReport
             return tagCatTupleList;
         }
 
+        /// <summary>
+        /// Get list of all Tags along with the count of entries with this tag
+        /// </summary>
         public List<Tuple<string, int>> GetTag
         {
             get
@@ -101,6 +127,9 @@ namespace SSILogReport
             }
         }
 
+        /// <summary>
+        /// Get list of all Categories along with the count of entries with this category
+        /// </summary>
         public List<Tuple<string, int>> GetCategory
         {
             get
@@ -109,23 +138,16 @@ namespace SSILogReport
             }
         }
 
-        public List<string> FilterLogDisplay(List<string> tags, List<string> categories)
-        {
-            List<string> filteredLogDisplay = new List<string>();
-            if (tags.Contains("ALL"))
-            {
-                tags = GetTag.Select(t => t.Item1).ToList();
-            }
-            if (categories.Contains("ALL"))
-            {
-                categories = GetCategory.Select(c => c.Item1).ToList();
-            }
-            //List <string> filter =
-            //filteredLogDisplay = LogList.Where(l => tags.All(t => l.LogEntryString.Contains(t)));
-            return filteredLogDisplay;
-        }
-
-        //TODO: Method documentation
+        /// <summary>
+        /// Write report into a log file. Report Contains the following:
+        /// 1. No. of log entries
+        /// 2. Start time
+        /// 3. End time
+        /// 4. Duration from log start time to end time
+        /// 5. All tags and count of how many times they are found on the log
+        /// 6. All categories and count of how many times they are found on the log
+        /// </summary>
+        /// <param name="writePath"></param>
         public void WriteReportFile(string writePath)
         {
             string[] report =
@@ -133,7 +155,9 @@ namespace SSILogReport
                 "No. of Log Entries: " + this.Entries,
                 "Start Time: " + this.StartTime.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture),
                 "End Time: " + this.EndTime.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture),
-                "Log Duration: " + this.LogDuration
+                "Log Duration: " + this.LogDuration,
+                "Tags: " + string.Join(", ", this.GetTag.Select(t => $"['{t.Item1}', '{t.Item2}']")),
+                "Categories: " + string.Join(", ", this.GetCategory.Select(t => $"['{t.Item1}', '{t.Item2}']")),
             };
             ProgramFileHandler.WriteFile(writePath, report);
         }

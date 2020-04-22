@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 /// <summary>
-/// Log class which contains Log variables
+/// Log class which models a given log file
 /// </summary>
 public class LogClass
 {

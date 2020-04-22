@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SSILogReport
 {
@@ -37,7 +33,11 @@ namespace SSILogReport
 
             return list;
         }
-
+        /// <summary>
+        /// Writes a string array into a file in a given path
+        /// </summary>
+        /// <param name="writePath"></param>
+        /// <param name="writeLines"></param>
         public static void WriteFile(string writePath, string[] writeLines)
         {
             string dir = writePath.Substring(0, writePath.LastIndexOf("\\") + 1);

@@ -52,7 +52,6 @@
             this.tagLabel = new System.Windows.Forms.Label();
             this.categoryLabel = new System.Windows.Forms.Label();
             this.tagListBox = new System.Windows.Forms.ListBox();
-            this.filterLogButton = new System.Windows.Forms.Button();
             this.LogDataGridView = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -364,16 +363,6 @@
             this.tagListBox.Size = new System.Drawing.Size(185, 105);
             this.tagListBox.TabIndex = 9;
             // 
-            // filterLogButton
-            // 
-            this.filterLogButton.Location = new System.Drawing.Point(319, 332);
-            this.filterLogButton.Name = "filterLogButton";
-            this.filterLogButton.Size = new System.Drawing.Size(75, 23);
-            this.filterLogButton.TabIndex = 11;
-            this.filterLogButton.Text = "Filter Log";
-            this.filterLogButton.UseVisualStyleBackColor = true;
-            this.filterLogButton.Click += new System.EventHandler(this.filterLogButton_Click);
-            // 
             // LogDataGridView
             // 
             this.LogDataGridView.AllowUserToAddRows = false;
@@ -395,7 +384,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(412, 584);
             this.Controls.Add(this.LogDataGridView);
-            this.Controls.Add(this.filterLogButton);
             this.Controls.Add(this.tableLayoutPanel4);
             this.Controls.Add(this.tableLayoutPanel3);
             this.Controls.Add(this.logLabel);
@@ -444,7 +432,6 @@
         private System.Windows.Forms.Label categoryLabel;
         private System.Windows.Forms.ListBox tagListBox;
         private System.Windows.Forms.ListBox categoryListBox;
-        private System.Windows.Forms.Button filterLogButton;
         private System.Windows.Forms.DataGridView LogDataGridView;
     }
 }
