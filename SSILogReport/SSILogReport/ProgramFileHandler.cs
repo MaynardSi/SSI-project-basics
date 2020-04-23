@@ -7,7 +7,7 @@ namespace SSILogReport
     /// <summary>
     /// Static class to be called for file handling functions
     /// </summary>
-    static class ProgramFileHandler
+    internal static class ProgramFileHandler
     {
         /// <summary>
         /// Returns a List containing the lines of a log file

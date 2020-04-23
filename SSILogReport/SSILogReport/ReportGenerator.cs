@@ -11,7 +11,7 @@ namespace SSILogReport
     /// to generate needed reports.
     /// </summary>
     ///
-    class ReportGenerator
+    internal class ReportGenerator
     {
         /// Properties and Constructor
         public List<Log.LogEntry> LogList { get; private set; }
