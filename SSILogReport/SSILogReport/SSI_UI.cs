@@ -9,14 +9,14 @@ namespace SSILogReport
 {
     public partial class SSILogReportForm : Form
     {
+        // Property and Constructor
+        internal ReportGenerator Report { get; private set; }
         public SSILogReportForm()
         {
             InitializeComponent();
         }
 
-        private LogClass Log { get; set; }
-        internal ReportGenerator Report { get; private set; }
-
+        // Method declarations
         /// <summary>
         /// Updates UI once a log file has been selected
         /// </summary>
@@ -24,14 +24,14 @@ namespace SSILogReport
         private void UpdateReportUI(string fileString)
         {
             fileInputBox.Text = fileString;
-            Report = new ReportGenerator(new LogClass(fileString, ProgramFileHandler.ReadFile(fileString)).LogList);
+            Report = new ReportGenerator(new Log(fileString, ProgramFileHandler.ReadFile(fileString)).LogList);
 
-            var entries = Report.Entries;
-            var startTime = Report.StartTime;
-            var endTime = Report.EndTime;
-            var logDuration = Report.LogDuration;
-            var tagDisplay = Report.GetTag;
-            var categoryDisplay = Report.GetCategory;
+            string entries = Report.Entries;
+            DateTime startTime = Report.StartTime;
+            DateTime endTime = Report.EndTime;
+            TimeSpan logDuration = Report.LogDuration;
+            List<Tuple<string, int>> tagDisplay = Report.GetTag;
+            List<Tuple<string, int>> categoryDisplay = Report.GetCategory;
             string[] splitpath = fileString.Split('.');
             string reportPath = String.Join("_report.", splitpath);
 

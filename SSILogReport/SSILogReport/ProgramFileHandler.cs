@@ -4,6 +4,9 @@ using System.IO;
 
 namespace SSILogReport
 {
+    /// <summary>
+    /// Static class to be called for file handling functions
+    /// </summary>
     static class ProgramFileHandler
     {
         /// <summary>
@@ -13,7 +16,7 @@ namespace SSILogReport
         /// <returns>List<string></returns>
         public static List<string> ReadFile(string path)
         {
-            var list = new List<string>();
+            List<string> list = new List<string>();
             try
             {
                 using (StreamReader sr = File.OpenText(path))
@@ -33,6 +36,7 @@ namespace SSILogReport
 
             return list;
         }
+
         /// <summary>
         /// Writes a string array into a file in a given path
         /// </summary>

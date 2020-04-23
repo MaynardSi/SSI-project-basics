@@ -13,13 +13,15 @@ namespace SSILogReport
     ///
     class ReportGenerator
     {
-        public ReportGenerator(List<LogClass.LogEntryClass> logList)
+        /// Properties and Constructor
+        public List<Log.LogEntry> LogList { get; private set; }
+
+        public ReportGenerator(List<Log.LogEntry> logList)
         {
             LogList = logList;
         }
 
-        public List<LogClass.LogEntryClass> LogList { get; private set; }
-
+        /// Method declarations
         /// <summary>
         /// Get number of log entries
         /// </summary>
@@ -38,7 +40,7 @@ namespace SSILogReport
         {
             get
             {
-                LogClass.LogEntryClass firstEntry = LogList.First();
+                Log.LogEntry firstEntry = LogList.First();
                 DateTime startTime = firstEntry.TimeInitiated;
                 return startTime;
             }
@@ -51,7 +53,7 @@ namespace SSILogReport
         {
             get
             {
-                LogClass.LogEntryClass lastEntry = LogList.Last();
+                Log.LogEntry lastEntry = LogList.Last();
                 DateTime endTime = lastEntry.TimeInitiated;
                 return endTime;
             }
@@ -96,23 +98,24 @@ namespace SSILogReport
         /// <returns></returns>
         public List<Tuple<string, int>> GetTagCatergory(bool isTag)
         {
-            //TODO: get all distinct tag names
             List<string> result = new List<string>();
             if (isTag)
             {
+                // Get all distinct tag names
                 result = LogList.Select(o => o.Tag).Distinct().ToList();
             }
             else
             {
+                // Get all distinct category names
                 result = LogList.Select(o => o.Category).Distinct().ToList();
             }
-            var tagCatTupleList = new List<Tuple<string, int>>();
-            foreach (var tagCat in result)
+            // Create a list of (tag/category, number of tag/category occurences) pairs
+            List<Tuple<string, int>> tagCatTupleList = new List<Tuple<string, int>>();
+            foreach (string tagCat in result)
             {
-                var tagTuple = new Tuple<string, int>(tagCat, GetTagCategoryCount(isTag, tagCat));
+                Tuple<string, int> tagTuple = new Tuple<string, int>(tagCat, GetTagCategoryCount(isTag, tagCat));
                 tagCatTupleList.Add(tagTuple);
             }
-            //TODO: for each tag, get count
             return tagCatTupleList;
         }
 

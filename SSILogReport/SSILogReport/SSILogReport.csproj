@@ -47,13 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ReportGenerator.cs" />
-    <Compile Include="LogClass.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="ProgramFileHandler.cs" />
-    <Compile Include="SSI UI.cs">
+    <Compile Include="SSI_UI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SSI UI.Designer.cs">
-      <DependentUpon>SSI UI.cs</DependentUpon>
+    <Compile Include="SSI_UI.Designer.cs">
+      <DependentUpon>SSI_UI.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,8 +66,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SSI UI.resx">
-      <DependentUpon>SSI UI.cs</DependentUpon>
+    <EmbeddedResource Include="SSI_UI.resx">
+      <DependentUpon>SSI_UI.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
