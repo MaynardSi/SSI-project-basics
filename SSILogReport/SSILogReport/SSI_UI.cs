@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace SSILogReport
     {
         // Property and Constructor
         internal ReportGenerator Report { get; private set; }
+
+        public object ShouldSerializeContractResolver { get; private set; }
 
         public SSILogReportForm()
         {
@@ -134,7 +137,20 @@ namespace SSILogReport
                 logEntryTimeInitiatedTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
                 logEntryTagTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
                 logEntryCategoryTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[3].FormattedValue.ToString();
-                logEntryActionTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[4].FormattedValue.ToString();
+
+                // JSON
+                string action = logDataGridView.Rows[e.RowIndex].Cells[4].FormattedValue.ToString();
+                if (action.Contains("#json"))
+                {
+                    string[] actionList = action.Split(' ');
+                    logEntryActionTextBox.Text = actionList[0] + "\n";
+                    dynamic parsedJson = JsonConvert.DeserializeObject(actionList[1]);
+                    logEntryActionTextBox.AppendText(JsonConvert.SerializeObject(parsedJson, Formatting.Indented));
+                }
+                else
+                {
+                    logEntryActionTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[4].FormattedValue.ToString();
+                }
             }
             catch
             {
