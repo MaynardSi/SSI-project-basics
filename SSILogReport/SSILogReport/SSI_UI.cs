@@ -11,6 +11,7 @@ namespace SSILogReport
     {
         // Property and Constructor
         internal ReportGenerator Report { get; private set; }
+
         public SSILogReportForm()
         {
             InitializeComponent();
@@ -21,7 +22,18 @@ namespace SSILogReport
         /// Updates UI once a log file has been selected
         /// </summary>
         /// <param name="fileString"></param>
-        private void UpdateReportUI(string fileString)
+        private void InitFormUI(string fileString)
+        {
+            InitReportDisplay(fileString);
+            InitFilterDisplay();
+            InitLogDisplay();
+        }
+
+        /// <summary>
+        /// Display basic information from selected log file using UI components
+        /// </summary>
+        /// <param name="fileString"></param>
+        private void InitReportDisplay(string fileString)
         {
             fileInputBox.Text = fileString;
             Report = new ReportGenerator(new Log(fileString, ProgramFileHandler.ReadFile(fileString)).LogList);
@@ -30,8 +42,6 @@ namespace SSILogReport
             DateTime startTime = Report.StartTime;
             DateTime endTime = Report.EndTime;
             TimeSpan logDuration = Report.LogDuration;
-            List<Tuple<string, int>> tagDisplay = Report.GetTag;
-            List<Tuple<string, int>> categoryDisplay = Report.GetCategory;
             string[] splitpath = fileString.Split('.');
             string reportPath = String.Join("_report.", splitpath);
 
@@ -44,47 +54,92 @@ namespace SSILogReport
                 logDuration.ToString("%s") + " seconds " +
                 logDuration.ToString("%f") + " milliseconds";
 
+            saveReportTextBox.Text = reportPath;
+            saveReportButton.Enabled = true;
+        }
+
+        /// <summary>
+        /// Display List of Tags and Categories that can be selected for log display filtering using UI components
+        /// </summary>
+        private void InitFilterDisplay()
+        {
+            List<Tuple<string, int>> tagDisplay = Report.GetTag;
+            List<Tuple<string, int>> categoryDisplay = Report.GetCategory;
+
             //Tag List Box for filtering
             tagListBox.ValueMember = "Item1";
             tagListBox.DisplayMember = tagDisplay.ToString();
             tagListBox.DataSource = tagDisplay;
             tagListBox.SelectedValueChanged += (s1, e1) => ListBox_SelectedValueChanged(s1, e1, true, categoryListBox);
+
             //Category List Box for filtering
             categoryListBox.ValueMember = "Item1";
             categoryListBox.DisplayMember = categoryDisplay.ToString();
             categoryListBox.DataSource = categoryDisplay;
             categoryListBox.SelectedValueChanged += (s2, e2) => ListBox_SelectedValueChanged(s2, e2, false, tagListBox);
+        }
+
+        /// <summary>
+        /// Display list of log entries using a DataGridView
+        /// </summary>
+        private void InitLogDisplay()
+        {
+            logDataGridView.AutoGenerateColumns = false;
+            DataGridViewTextBoxColumn EntryField = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "No.",
+                DataPropertyName = "EntryNo"
+            };
+            DataGridViewTextBoxColumn TagField = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Tag",
+                DataPropertyName = "Tag"
+            };
+            DataGridViewTextBoxColumn CategoryField = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Category",
+                DataPropertyName = "Category"
+            };
+            DataGridViewTextBoxColumn TimeField = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Time Started",
+                DataPropertyName = "TimeInitiated",
+            };
+            TimeField.DefaultCellStyle.Format = "MMMM dd, yyyy HH:mm:ss.fff";
+            DataGridViewTextBoxColumn ActionField = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Action",
+                DataPropertyName = "ActionTaken"
+            };
+            logDataGridView.Columns.Add(EntryField);
+            logDataGridView.Columns.Add(TagField);
+            logDataGridView.Columns.Add(CategoryField);
+            logDataGridView.Columns.Add(TimeField);
+            logDataGridView.Columns.Add(ActionField);
             //Data table to Data Grid View of the log
             DataTable ldt = ToDataTable(Report.LogList);
-            LogDataGridView.DataSource = ldt;
-
-            saveReportTextBox.Text = reportPath;
-
-            saveReportButton.Enabled = true;
+            logDataGridView.DataSource = ldt;
         }
+
         /// <summary>
-        /// Event handler for log file selection
+        /// Display list of log entries using UI components
         /// </summary>
-        /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BrowseButton_Click(object sender, EventArgs e)
+        private void UpdateEntryDisplay(DataGridViewCellEventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            logDataGridView.CurrentRow.Selected = true;
+            try
             {
-                string fileString = openFileDialog1.FileName;
-                try
-                {
-                    UpdateReportUI(fileString);
-                }
-                catch
-                {
-
-                }
+                logEntryNoTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
+                logEntryTimeInitiatedTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
+                logEntryTagTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
+                logEntryCategoryTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[3].FormattedValue.ToString();
+                logEntryActionTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[4].FormattedValue.ToString();
+            }
+            catch
+            {
             }
         }
-
 
         /// <summary>
         /// Method to transform collection into a datatable
@@ -127,6 +182,29 @@ namespace SSILogReport
             return dt;
         }
 
+        /// Event Handlers
+        /// <summary>
+        /// Event handler for log file selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowseButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string fileString = openFileDialog1.FileName;
+                try
+                {
+                    InitFormUI(fileString);
+                }
+                catch
+                {
+                }
+            }
+        }
+
         /// <summary>
         /// Event handler for Tag and Category List boxes for filtering
         /// </summary>
@@ -150,7 +228,6 @@ namespace SSILogReport
                     tagFilters.Add(filterAddItem.Item1);
                 else
                     categoryFilters.Add(filterAddItem.Item1);
-
             }
             for (int i = 0; i < otherListbox.SelectedItems.Count; i++)
             {
@@ -160,7 +237,6 @@ namespace SSILogReport
                     tagFilters.Add(otherFilterAddItem.Item1);
                 else
                     categoryFilters.Add(otherFilterAddItem.Item1);
-
             }
             // String concatenation for formatted query statement
             tagFiltersString += string.Join(",", tagFilters.Select(x => string.Format("'{0}'", x)));
@@ -171,7 +247,7 @@ namespace SSILogReport
 
             // Filter statement and method
             string rowFilter = string.Format("{0}", queryStatement);
-            (LogDataGridView.DataSource as DataTable).DefaultView.RowFilter = rowFilter;
+            (logDataGridView.DataSource as DataTable).DefaultView.RowFilter = rowFilter;
         }
 
         /// <summary>
@@ -196,10 +272,47 @@ namespace SSILogReport
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
             }
+        }
+
+        /// <summary>
+        /// Selects all Tags by simulating key press upon button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TagAddAllButton_Click(object sender, EventArgs e)
+        {
+            tagListBox.BeginUpdate();
+            tagListBox.Select();
+            SendKeys.Send("{Home}");
+            SendKeys.Send("+{End}");
+            tagListBox.EndUpdate();
+        }
+
+        /// <summary>
+        /// Selects all Categories by simulating key press upon button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CategoryAddAllButton_Click(object sender, EventArgs e)
+        {
+            categoryListBox.BeginUpdate();
+            categoryListBox.Select();
+            SendKeys.Send("{Home}");
+            SendKeys.Send("+{End}");
+            categoryListBox.EndUpdate();
+        }
+
+        /// <summary>
+        /// Updates
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LogDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            UpdateEntryDisplay(e);
         }
     }
 }
