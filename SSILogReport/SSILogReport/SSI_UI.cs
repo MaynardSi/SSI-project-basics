@@ -25,18 +25,18 @@ namespace SSILogReport
         /// Updates UI once a log file has been selected
         /// </summary>
         /// <param name="fileString"></param>
-        private void InitFormUI(string fileString)
+        private void initFormUI(string fileString)
         {
-            InitReportDisplay(fileString);
-            InitFilterDisplay();
-            InitLogDisplay();
+            initReportDisplay(fileString);
+            initFilterDisplay();
+            initLogDisplay();
         }
 
         /// <summary>
         /// Display basic information from selected log file using UI components
         /// </summary>
         /// <param name="fileString"></param>
-        private void InitReportDisplay(string fileString)
+        private void initReportDisplay(string fileString)
         {
             fileInputBox.Text = fileString;
             Report = new ReportGenerator(new Log(fileString, ProgramFileHandler.ReadFile(fileString)).LogList);
@@ -64,7 +64,7 @@ namespace SSILogReport
         /// <summary>
         /// Display List of Tags and Categories that can be selected for log display filtering using UI components
         /// </summary>
-        private void InitFilterDisplay()
+        private void initFilterDisplay()
         {
             List<Tuple<string, int>> tagDisplay = Report.GetTag;
             List<Tuple<string, int>> categoryDisplay = Report.GetCategory;
@@ -73,19 +73,19 @@ namespace SSILogReport
             tagListBox.ValueMember = "Item1";
             tagListBox.DisplayMember = tagDisplay.ToString();
             tagListBox.DataSource = tagDisplay;
-            tagListBox.SelectedValueChanged += (s1, e1) => ListBox_SelectedValueChanged(s1, e1, true, categoryListBox);
+            tagListBox.SelectedValueChanged += (s1, e1) => listBox_SelectedValueChanged(s1, e1, true, categoryListBox);
 
             //Category List Box for filtering
             categoryListBox.ValueMember = "Item1";
             categoryListBox.DisplayMember = categoryDisplay.ToString();
             categoryListBox.DataSource = categoryDisplay;
-            categoryListBox.SelectedValueChanged += (s2, e2) => ListBox_SelectedValueChanged(s2, e2, false, tagListBox);
+            categoryListBox.SelectedValueChanged += (s2, e2) => listBox_SelectedValueChanged(s2, e2, false, tagListBox);
         }
 
         /// <summary>
         /// Display list of log entries using a DataGridView
         /// </summary>
-        private void InitLogDisplay()
+        private void initLogDisplay()
         {
             logDataGridView.AutoGenerateColumns = false;
             DataGridViewTextBoxColumn EntryField = new DataGridViewTextBoxColumn
@@ -120,7 +120,7 @@ namespace SSILogReport
             logDataGridView.Columns.Add(TimeField);
             logDataGridView.Columns.Add(ActionField);
             //Data table to Data Grid View of the log
-            DataTable ldt = ToDataTable(Report.LogList);
+            DataTable ldt = toDataTable(Report.LogList);
             logDataGridView.DataSource = ldt;
         }
 
@@ -128,7 +128,7 @@ namespace SSILogReport
         /// Display list of log entries using UI components
         /// </summary>
         /// <param name="e"></param>
-        private void UpdateEntryDisplay(DataGridViewCellEventArgs e)
+        private void updateEntryDisplay(DataGridViewCellEventArgs e)
         {
             logDataGridView.CurrentRow.Selected = true;
             try
@@ -163,7 +163,7 @@ namespace SSILogReport
         /// <typeparam name="T"></typeparam>
         /// <param name="collection"></param>
         /// <returns></returns>
-        private DataTable ToDataTable<T>(IEnumerable<T> collection)
+        private DataTable toDataTable<T>(IEnumerable<T> collection)
         {
             DataTable dt = new DataTable("DataTable");
             Type t = typeof(T);
@@ -204,7 +204,7 @@ namespace SSILogReport
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BrowseButton_Click(object sender, EventArgs e)
+        private void browseButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
@@ -213,7 +213,7 @@ namespace SSILogReport
                 string fileString = openFileDialog1.FileName;
                 try
                 {
-                    InitFormUI(fileString);
+                    initFormUI(fileString);
                 }
                 catch
                 {
@@ -226,7 +226,7 @@ namespace SSILogReport
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListBox_SelectedValueChanged(object sender, EventArgs e, bool isTag, ListBox otherListbox)
+        private void listBox_SelectedValueChanged(object sender, EventArgs e, bool isTag, ListBox otherListbox)
         {
             ListBox listbox = (ListBox)sender;
             List<string> tagFilters = new List<string>();
@@ -272,7 +272,7 @@ namespace SSILogReport
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaveReportButton_Click(object sender, EventArgs e)
+        private void saveReportButton_Click(object sender, EventArgs e)
         {
             string path = saveReportTextBox.Text;                       //Default text for file
             SaveFileDialog SaveFileDialog1 = new SaveFileDialog();      //Save File dialog prompt
@@ -298,7 +298,7 @@ namespace SSILogReport
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TagAddAllButton_Click(object sender, EventArgs e)
+        private void tagAddAllButton_Click(object sender, EventArgs e)
         {
             tagListBox.BeginUpdate();
             tagListBox.Select();
@@ -312,7 +312,7 @@ namespace SSILogReport
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CategoryAddAllButton_Click(object sender, EventArgs e)
+        private void categoryAddAllButton_Click(object sender, EventArgs e)
         {
             categoryListBox.BeginUpdate();
             categoryListBox.Select();
@@ -322,13 +322,13 @@ namespace SSILogReport
         }
 
         /// <summary>
-        /// Updates
+        /// Updates entry report display given row entry
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void LogDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void logDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            UpdateEntryDisplay(e);
+            updateEntryDisplay(e);
         }
     }
 }
