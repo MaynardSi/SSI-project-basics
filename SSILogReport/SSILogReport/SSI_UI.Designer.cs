@@ -116,7 +116,7 @@
             this.browseButton.TabIndex = 0;
             this.browseButton.Text = "Browse";
             this.browseButton.UseVisualStyleBackColor = true;
-            this.browseButton.Click += new System.EventHandler(this.BrowseButton_Click);
+            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -307,7 +307,7 @@
             this.saveReportButton.TabIndex = 0;
             this.saveReportButton.Text = "Save Report";
             this.saveReportButton.UseVisualStyleBackColor = true;
-            this.saveReportButton.Click += new System.EventHandler(this.SaveReportButton_Click);
+            this.saveReportButton.Click += new System.EventHandler(this.saveReportButton_Click);
             // 
             // saveReportTextBox
             // 
@@ -376,7 +376,7 @@
             this.categoryAddAllButton.TabIndex = 8;
             this.categoryAddAllButton.Text = "+";
             this.categoryAddAllButton.UseVisualStyleBackColor = true;
-            this.categoryAddAllButton.Click += new System.EventHandler(this.CategoryAddAllButton_Click);
+            this.categoryAddAllButton.Click += new System.EventHandler(this.categoryAddAllButton_Click);
             // 
             // categoriesListLabel
             // 
@@ -430,7 +430,7 @@
             this.tagAddAllButton.TabIndex = 8;
             this.tagAddAllButton.Text = "+";
             this.tagAddAllButton.UseVisualStyleBackColor = true;
-            this.tagAddAllButton.Click += new System.EventHandler(this.TagAddAllButton_Click);
+            this.tagAddAllButton.Click += new System.EventHandler(this.tagAddAllButton_Click);
             // 
             // categoryListBox
             // 
@@ -464,7 +464,7 @@
             this.logDataGridView.ReadOnly = true;
             this.logDataGridView.Size = new System.Drawing.Size(1094, 693);
             this.logDataGridView.TabIndex = 12;
-            this.logDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.LogDataGridView_CellClick);
+            this.logDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.logDataGridView_CellClick);
             // 
             // tableLayoutPanel7
             // 

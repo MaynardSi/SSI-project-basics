@@ -9,11 +9,6 @@ namespace SSILogReport
     /// </summary>
     internal static class ProgramFileHandler
     {
-        /// <summary>
-        /// Returns a List containing the lines of a log file
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns>List<string></returns>
         public static List<string> ReadFile(string path)
         {
             List<string> list = new List<string>();
@@ -37,11 +32,6 @@ namespace SSILogReport
             return list;
         }
 
-        /// <summary>
-        /// Writes a string array into a file in a given path
-        /// </summary>
-        /// <param name="writePath"></param>
-        /// <param name="writeLines"></param>
         public static void WriteFile(string writePath, string[] writeLines)
         {
             File.WriteAllLines(writePath, writeLines);
