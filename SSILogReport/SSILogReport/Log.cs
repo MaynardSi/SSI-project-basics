@@ -12,10 +12,10 @@ public class Log
     public Log(string logName, List<string> log)
     {
         this.LogName = logName;
-        this.LogList = ParseLogs(log);
+        this.LogList = parseLogs(log);
     }
 
-    private static List<LogEntry> ParseLogs(List<string> log)
+    private static List<LogEntry> parseLogs(List<string> log)
     {
         List<LogEntry> logList = new List<LogEntry>();
         char[] charSeparators = new char[] { ',' };
