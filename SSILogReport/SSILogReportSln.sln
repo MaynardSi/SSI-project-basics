@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.1082
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSILogReport", "SSILogReport\SSILogReport.csproj", "{F6FF72F2-7D5E-4E5D-9D64-027C4C629E3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{105B51CA-6A8A-4AE7-B626-58F2163284BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F6FF72F2-7D5E-4E5D-9D64-027C4C629E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6FF72F2-7D5E-4E5D-9D64-027C4C629E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6FF72F2-7D5E-4E5D-9D64-027C4C629E3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{105B51CA-6A8A-4AE7-B626-58F2163284BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{105B51CA-6A8A-4AE7-B626-58F2163284BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{105B51CA-6A8A-4AE7-B626-58F2163284BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{105B51CA-6A8A-4AE7-B626-58F2163284BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

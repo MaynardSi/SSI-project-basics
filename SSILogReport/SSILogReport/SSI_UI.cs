@@ -1,30 +1,22 @@
-﻿using Newtonsoft.Json;
+﻿using Common;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace SSILogReport
 {
     public partial class SSILogReportForm : Form
     {
-        // Property and Constructor
-        internal ReportGenerator Report { get; private set; }
-
-        public object ShouldSerializeContractResolver { get; private set; }
-
         public SSILogReportForm()
         {
             InitializeComponent();
         }
 
-        // Method declarations
-        /// <summary>
-        /// Updates UI once a log file has been selected
-        /// </summary>
-        /// <param name="fileString"></param>
+        internal ReportGenerator Report { get; private set; }
+
         private void initFormUI(string fileString)
         {
             initReportDisplay(fileString);
@@ -32,10 +24,6 @@ namespace SSILogReport
             initLogDisplay();
         }
 
-        /// <summary>
-        /// Display basic information from selected log file using UI components
-        /// </summary>
-        /// <param name="fileString"></param>
         private void initReportDisplay(string fileString)
         {
             fileInputBox.Text = fileString;
@@ -61,9 +49,6 @@ namespace SSILogReport
             saveReportButton.Enabled = true;
         }
 
-        /// <summary>
-        /// Display List of Tags and Categories that can be selected for log display filtering using UI components
-        /// </summary>
         private void initFilterDisplay()
         {
             List<Tuple<string, int>> tagDisplay = Report.GetTag;
@@ -82,9 +67,6 @@ namespace SSILogReport
             categoryListBox.SelectedValueChanged += (s2, e2) => listBox_SelectedValueChanged(s2, e2, false, tagListBox);
         }
 
-        /// <summary>
-        /// Display list of log entries using a DataGridView
-        /// </summary>
         private void initLogDisplay()
         {
             logDataGridView.AutoGenerateColumns = false;
@@ -120,90 +102,10 @@ namespace SSILogReport
             logDataGridView.Columns.Add(TimeField);
             logDataGridView.Columns.Add(ActionField);
             //Data table to Data Grid View of the log
-            DataTable ldt = toDataTable(Report.LogList);
+            DataTable ldt = DataTableHandler.toDataTable(Report.LogList);
             logDataGridView.DataSource = ldt;
         }
 
-        /// <summary>
-        /// Display list of log entries using UI components
-        /// </summary>
-        /// <param name="e"></param>
-        private void updateEntryDisplay(DataGridViewCellEventArgs e)
-        {
-            logDataGridView.CurrentRow.Selected = true;
-            try
-            {
-                logEntryNoTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
-                logEntryTimeInitiatedTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
-                logEntryTagTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
-                logEntryCategoryTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[3].FormattedValue.ToString();
-
-                // JSON
-                string action = logDataGridView.Rows[e.RowIndex].Cells[4].FormattedValue.ToString();
-                if (action.Contains("#json"))
-                {
-                    string[] actionList = action.Split(' ');
-                    logEntryActionTextBox.Text = actionList[0] + "\n";
-                    dynamic parsedJson = JsonConvert.DeserializeObject(actionList[1]);
-                    logEntryActionTextBox.AppendText(JsonConvert.SerializeObject(parsedJson, Formatting.Indented));
-                }
-                else
-                {
-                    logEntryActionTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[4].FormattedValue.ToString();
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Method to transform collection into a datatable
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="collection"></param>
-        /// <returns></returns>
-        private DataTable toDataTable<T>(IEnumerable<T> collection)
-        {
-            DataTable dt = new DataTable("DataTable");
-            Type t = typeof(T);
-            PropertyInfo[] pia = t.GetProperties();
-
-            //Inspect the properties and create the columns in the DataTable
-            foreach (PropertyInfo pi in pia)
-            {
-                Type ColumnType = pi.PropertyType;
-                if ((ColumnType.IsGenericType))
-                {
-                    ColumnType = ColumnType.GetGenericArguments()[0];
-                }
-                dt.Columns.Add(pi.Name, ColumnType);
-            }
-
-            //Populate the data table
-            foreach (T item in collection)
-            {
-                DataRow dr = dt.NewRow();
-                dr.BeginEdit();
-                foreach (PropertyInfo pi in pia)
-                {
-                    if (pi.GetValue(item, null) != null)
-                    {
-                        dr[pi.Name] = pi.GetValue(item, null);
-                    }
-                }
-                dr.EndEdit();
-                dt.Rows.Add(dr);
-            }
-            return dt;
-        }
-
-        /// Event Handlers
-        /// <summary>
-        /// Event handler for log file selection
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void browseButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -215,17 +117,13 @@ namespace SSILogReport
                 {
                     initFormUI(fileString);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Console.WriteLine($"Unexpected error: {ex.Message}");
                 }
             }
         }
 
-        /// <summary>
-        /// Event handler for Tag and Category List boxes for filtering
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void listBox_SelectedValueChanged(object sender, EventArgs e, bool isTag, ListBox otherListbox)
         {
             ListBox listbox = (ListBox)sender;
@@ -255,23 +153,17 @@ namespace SSILogReport
                     categoryFilters.Add(otherFilterAddItem.Item1);
             }
             // String concatenation for formatted query statement
-            tagFiltersString += string.Join(",", tagFilters.Select(x => string.Format("'{0}'", x)));
+            tagFiltersString += string.Join(",", tagFilters.Select(x => string.Format($"'{x}'")));
             tagFiltersString += ")";
-            catFiltersString += string.Join(",", categoryFilters.Select(x => string.Format("'{0}'", x)));
+            catFiltersString += string.Join(",", categoryFilters.Select(x => string.Format($"'{x}'")));
             catFiltersString += ")";
             queryStatement = tagFiltersString + " AND " + catFiltersString;
 
             // Filter statement and method
-            string rowFilter = string.Format("{0}", queryStatement);
+            string rowFilter = string.Format($"{queryStatement}");
             (logDataGridView.DataSource as DataTable).DefaultView.RowFilter = rowFilter;
         }
 
-        /// <summary>
-        /// Writes the log file upon pressing the save button and selecting a path.
-        /// Calls the WriteReportFile method from the report object
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void saveReportButton_Click(object sender, EventArgs e)
         {
             string path = saveReportTextBox.Text;                       //Default text for file
@@ -293,42 +185,59 @@ namespace SSILogReport
             }
         }
 
-        /// <summary>
-        /// Selects all Tags by simulating key press upon button click
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void tagAddAllButton_Click(object sender, EventArgs e)
         {
-            tagListBox.BeginUpdate();
-            tagListBox.Select();
-            SendKeys.Send("{Home}");
-            SendKeys.Send("+{End}");
-            tagListBox.EndUpdate();
+            listBoxAllButton_Click(true);
         }
 
-        /// <summary>
-        /// Selects all Categories by simulating key press upon button click
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void categoryAddAllButton_Click(object sender, EventArgs e)
         {
-            categoryListBox.BeginUpdate();
-            categoryListBox.Select();
-            SendKeys.Send("{Home}");
-            SendKeys.Send("+{End}");
-            categoryListBox.EndUpdate();
+            listBoxAllButton_Click(false);
         }
 
-        /// <summary>
-        /// Updates entry report display given row entry
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        private void listBoxAllButton_Click(bool isTag)
+        {
+            ListBox listbox = isTag ? tagListBox : categoryListBox;
+            listbox.BeginUpdate();
+            listbox.Select();
+            SendKeys.Send("{Home}");
+            SendKeys.Send("+{End}");
+            listbox.EndUpdate();
+        }
+
         private void logDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             updateEntryDisplay(e);
+        }
+
+        private void updateEntryDisplay(DataGridViewCellEventArgs e)
+        {
+            logDataGridView.CurrentRow.Selected = true;
+            try
+            {
+                logEntryNoTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
+                logEntryTimeInitiatedTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
+                logEntryTagTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
+                logEntryCategoryTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[3].FormattedValue.ToString();
+
+                // JSON
+                string action = logDataGridView.Rows[e.RowIndex].Cells[4].FormattedValue.ToString();
+                if (action.Contains("#json"))
+                {
+                    string[] actionList = action.Split(' ');
+                    logEntryActionTextBox.Text = actionList[0] + "\n";
+                    dynamic parsedJson = JsonConvert.DeserializeObject(actionList[1]);
+                    logEntryActionTextBox.AppendText(JsonConvert.SerializeObject(parsedJson, Formatting.Indented));
+                }
+                else
+                {
+                    logEntryActionTextBox.Text = logDataGridView.Rows[e.RowIndex].Cells[4].FormattedValue.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+            }
         }
     }
 }

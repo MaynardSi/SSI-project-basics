@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="ReportGenerator.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="ProgramFileHandler.cs" />
     <Compile Include="SSI_UI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +85,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{105b51ca-6a8a-4ae7-b626-58f2163284ba}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

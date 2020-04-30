@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace SSILogReport
+namespace Common
 {
     /// <summary>
     /// Static class to be called for file handling functions
     /// </summary>
-    internal static class ProgramFileHandler
+    public static class ProgramFileHandler
     {
         public static List<string> ReadFile(string path)
         {

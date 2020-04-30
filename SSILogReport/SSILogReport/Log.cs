@@ -6,14 +6,14 @@ using System.Collections.Generic;
 /// </summary>
 public class Log
 {
-    public string LogName { get; private set; }
-    public List<LogEntry> LogList { get; set; }
-
     public Log(string logName, List<string> log)
     {
         this.LogName = logName;
         this.LogList = parseLogs(log);
     }
+
+    public string LogName { get; private set; }
+    public List<LogEntry> LogList { get; set; }
 
     private static List<LogEntry> parseLogs(List<string> log)
     {
